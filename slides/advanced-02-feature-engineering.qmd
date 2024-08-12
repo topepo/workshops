@@ -2,7 +2,7 @@
 title: "2 - Feature Engineering"
 subtitle: "Advanced tidymodels"
 format:
-  revealjs: 
+  live-revealjs: 
     slide-number: true
     footer: <https://workshops.tidymodels.org>
     include-before-body: header.html
@@ -24,6 +24,16 @@ knitr:
 #| file: setup.R
 ```
 
+```{r}
+#| label: load-pkgs
+#| echo: false
+library(tidymodels)
+
+# Add another package:
+library(textrecipes)
+```
+
+{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}
 
 ## Working with our predictors
 
@@ -107,8 +117,9 @@ These terms are often used interchangeably in the ML community but we want to di
 
 ::: {.column width="40"}
 
-```{r}
+```{webr}
 #| label: recipes-startup
+#| engine: knitr
 library(tidymodels)
 
 # Add another package:

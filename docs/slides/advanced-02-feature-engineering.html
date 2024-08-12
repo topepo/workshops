@@ -8,8 +8,10 @@
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.6.1">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.6.3">
 
   <title>Machine learning with tidymodels – 2 - Feature Engineering</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -385,6 +387,8 @@
       margin-right: 0; 
     }
   </style>
+  <script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+  <link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
   <link href="../site_libs/countdown-0.4.0/countdown.css" rel="stylesheet">
   <script src="../site_libs/countdown-0.4.0/countdown.js"></script>
 <meta property="og:title" content="2 - Feature Engineering – Machine learning with tidymodels">
@@ -498,17 +502,17 @@
 <div class="columns">
 <div class="column" style="width:40;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidymodels)</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource knitr number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a></a>library(tidymodels)</span>
 <span id="cb1-2"><a></a></span>
-<span id="cb1-3"><a></a><span class="co"># Add another package:</span></span>
-<span id="cb1-4"><a></a><span class="fu">library</span>(textrecipes)</span>
+<span id="cb1-3"><a></a># Add another package:</span>
+<span id="cb1-4"><a></a>library(textrecipes)</span>
 <span id="cb1-5"><a></a></span>
-<span id="cb1-6"><a></a><span class="co"># Max's usual settings: </span></span>
-<span id="cb1-7"><a></a><span class="fu">tidymodels_prefer</span>()</span>
-<span id="cb1-8"><a></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span>
-<span id="cb1-9"><a></a><span class="fu">options</span>(</span>
-<span id="cb1-10"><a></a>  <span class="at">pillar.advice =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb1-11"><a></a>  <span class="at">pillar.min_title_chars =</span> <span class="cn">Inf</span></span>
+<span id="cb1-6"><a></a># Max's usual settings: </span>
+<span id="cb1-7"><a></a>tidymodels_prefer()</span>
+<span id="cb1-8"><a></a>theme_set(theme_bw())</span>
+<span id="cb1-9"><a></a>options(</span>
+<span id="cb1-10"><a></a>  pillar.advice = FALSE, </span>
+<span id="cb1-11"><a></a>  pillar.min_title_chars = Inf</span>
 <span id="cb1-12"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:60;">
@@ -1100,6 +1104,20 @@ R^2 &amp;= cor(y_i, \hat{y}_i)^2
 <p><a href="https://workshops.tidymodels.org" class="uri">https://workshops.tidymodels.org</a></p>
 </div>
 </div>
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
 </div>
 </section>
     </div>
@@ -1342,6 +1360,17 @@ R^2 &amp;= cor(y_i, \hat{y}_i)^2
       }
     } );
 
+    </script>
+    <script type="ojs-module-contents">
+    eyJjb250ZW50cyI6W119
+    </script>
+    <script type="module">
+    if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+    window._ojs.paths.runtimeToDoc = "../../slides";
+    window._ojs.paths.runtimeToRoot = "../..";
+    window._ojs.paths.docToRoot = "..";
+    window._ojs.selfContained = false;
+    window._ojs.runtime.interpretFromScriptTags();
     </script>
     
     <script>
