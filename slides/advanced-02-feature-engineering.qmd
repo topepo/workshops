@@ -3,6 +3,9 @@ title: "2 - Feature Engineering"
 subtitle: "Advanced tidymodels"
 format:
   live-revealjs: 
+    webr:
+      packages:
+        - splines2  
     slide-number: true
     footer: <https://workshops.tidymodels.org>
     include-before-body: header.html
@@ -10,7 +13,7 @@ format:
     theme: [default, tidymodels.scss]
     width: 1280
     height: 720
-#| engine: knitr
+engine: knitr
 knitr:
   opts_chunk: 
     echo: true
@@ -134,6 +137,8 @@ print("done!")
 
 ```{webr}
 #| label: data-import
+#| define: 
+#|  - hotel_rates 
 
 data(hotel_rates)
 set.seed(295)
@@ -147,6 +152,7 @@ hotel_rates <-
     country = factor(as.character(country)),
     agent = factor(as.character(agent))
   )
+
 
 nrow(hotel_rates)
 ```
@@ -162,6 +168,8 @@ nrow(hotel_rates)
 
 # The chunks with labels "background-" are duplicates that are always run (but 
 # not shown) when compiling the slides.
+
+# George is working on a chunk option to run it in the quarto session
 data(hotel_rates)
 set.seed(295)
 hotel_rates <- 
@@ -176,7 +184,30 @@ hotel_rates <-
   )
 ```
 
+## new slide 2
 
+${nrow(hotel_rates)}
+
+## new slide
+
+```{r}
+
+foo <- data.frame(x = 2)
+ojs_define(foo)
+```
+
+```{webr}
+#| input:
+#|   - foo
+
+foo$x + 1
+```
+
+```{ojs}
+//| include: false
+
+foo
+```
 
 ## Previously - Data Usage  `r hexes("rsample")`
 
