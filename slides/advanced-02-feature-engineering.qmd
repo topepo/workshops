@@ -10,6 +10,7 @@ format:
     theme: [default, tidymodels.scss]
     width: 1280
     height: 720
+#| engine: knitr
 knitr:
   opts_chunk: 
     echo: true
@@ -113,13 +114,9 @@ These terms are often used interchangeably in the ML community but we want to di
 
 ## Previously - Setup  `r hexes("tidymodels")`
 
-:::: {.columns}
-
-::: {.column width="40"}
 
 ```{webr}
 #| label: recipes-startup
-#| engine: knitr
 library(tidymodels)
 
 # Add another package:
@@ -128,19 +125,43 @@ library(textrecipes)
 # Max's usual settings: 
 tidymodels_prefer()
 theme_set(theme_bw())
-options(
-  pillar.advice = FALSE, 
-  pillar.min_title_chars = Inf
-)
+options(pillar.advice = FALSE, pillar.min_title_chars = Inf)
+
+print("done!")
 ```
 
-:::
+## Previously - Get Data  `r hexes("tidymodels")`
 
-::: {.column width="60"}
-
-```{r}
+```{webr}
 #| label: data-import
 
+data(hotel_rates)
+set.seed(295)
+hotel_rates <- 
+  hotel_rates %>% 
+  sample_n(5000) %>% 
+  arrange(arrival_date) %>% 
+  select(-arrival_date) %>% 
+  mutate(
+    company = factor(as.character(company)),
+    country = factor(as.character(country)),
+    agent = factor(as.character(agent))
+  )
+
+nrow(hotel_rates)
+```
+
+```{r}
+#| label: background-data-import
+#| include: false
+
+# Note to whomever is reading the sources... we are using webr to let users run
+# locally in the browser. However, some slides/code chunks assume that the code
+# has already been run. When the page is first loaded, we need to have the objects
+# produced by the webr chunks. 
+
+# The chunks with labels "background-" are duplicates that are always run (but 
+# not shown) when compiling the slides.
 data(hotel_rates)
 set.seed(295)
 hotel_rates <- 
@@ -156,15 +177,24 @@ hotel_rates <-
 ```
 
 
-:::
-
-::::
-
 
 ## Previously - Data Usage  `r hexes("rsample")`
 
-```{r}
+```{webr}
 #| label: hotel-split
+set.seed(4028)
+hotel_split <- initial_split(hotel_rates, strata = avg_price_per_room)
+
+hotel_train <- training(hotel_split)
+nrow(hotel_train)
+
+hotel_test <- testing(hotel_split)
+nrow(hotel_test)
+```
+
+```{r}
+#| label: background-hotel-split
+#| include: false
 set.seed(4028)
 hotel_split <- initial_split(hotel_rates, strata = avg_price_per_room)
 
@@ -193,8 +223,16 @@ knitr::include_graphics("images/10-Fold-CV.svg")
 
 We'll use simple 10-fold cross-validation (stratified sampling):
 
-```{r}
+```{webr}
 #| label: hotel-rs
+set.seed(472)
+hotel_rs <- vfold_cv(hotel_train, strata = avg_price_per_room)
+hotel_rs
+```
+
+```{r}
+#| label: background-hotel-rs
+#| include: false
 set.seed(472)
 hotel_rs <- vfold_cv(hotel_train, strata = avg_price_per_room)
 hotel_rs
@@ -215,19 +253,25 @@ hotel_rs
 
 ## A first recipe `r hexes("recipes")`
 
-```{r}
+```{webr}
 #| label: base-recipe
 hotel_rec <- 
   recipe(avg_price_per_room ~ ., data = hotel_train)
 ```
 
+```{webr}
+#| label: background-base-recipe
+#| include: false
+hotel_rec <- 
+  recipe(avg_price_per_room ~ ., data = hotel_train)
+```
 . . .
 
 - The `recipe()` function assigns columns to roles of "outcome" or "predictor" using the formula
 
 ## A first recipe `r hexes("recipes")`
 
-```{r}
+```{webr}
 #| label: rec-summary
 summary(hotel_rec)
 ```
@@ -238,6 +282,13 @@ The `type` column contains information on the variables
 ## Your turn {transition="slide-in"}
 
 What do you think are in the `type` vectors for the `lead_time` and `country` columns?
+
+
+```{webr}
+#| label: rec-summary-repeats
+summary(hotel_rec)
+```
+
 
 ```{r}
 #| label: var-type-exercise
@@ -412,7 +463,7 @@ countdown::countdown(minutes = 3, id = "make-recipe")
 
 ## Minimal recipe `r hexes("recipes")` 
 
-```{r}
+```{webr}
 #| label: hotel-rec
 hotel_indicators <-
   recipe(avg_price_per_room ~ ., data = hotel_train) %>% 
@@ -422,6 +473,17 @@ hotel_indicators <-
   step_spline_natural(arrival_date_num, deg_free = 10)
 ```
 
+```{r}
+#| label: background-hotel-rec
+#| include: false
+
+hotel_indicators <-
+  recipe(avg_price_per_room ~ ., data = hotel_train) %>% 
+  step_YeoJohnson(lead_time) %>%
+  step_dummy(all_nominal_predictors()) %>%
+  step_zv(all_predictors()) %>% 
+  step_spline_natural(arrival_date_num, deg_free = 10)
+```
 
 ## Measuring Performance `r hexes("yardstick")`
 
